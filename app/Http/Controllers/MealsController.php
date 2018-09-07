@@ -15,9 +15,13 @@ class MealsController extends Controller
      */
     public function index()
     {
-        $meals = Meal::paginate(15);
-
-        return MealResource::collection($meals);
+        // TODO: Create a controller for meals api  
+        // $meals = Meal::paginate(15);
+        // return MealResource::collection($meals);
+        
+        $meals = Meal::all();;
+        
+        return view('meal.index')->with(compact('meals'));
     }
 
     /**
@@ -27,7 +31,7 @@ class MealsController extends Controller
      */
     public function create()
     {
-        //
+        return view('meal.addmealform');
     }
 
     /**
@@ -38,7 +42,19 @@ class MealsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        # Getting all input data
+        $meal = new Meal;
+        $meal->name = $request->input('name');
+        $meal->price = $request->input('price');
+        $meal->description = $request->input('description');
+
+        # TODO: Make all the letter of the meal type lowercase 
+        $meal->menu_type =  $request->input('meal_type');
+        $meal->banner = '/assets/imgs/thumbs/default.jpg';
+
+        if ( $meal->save() ) {
+            return redirect('meal');
+        }
     }
 
     /**
@@ -60,7 +76,9 @@ class MealsController extends Controller
      */
     public function edit($id)
     {
-        //
+       $meal = Meal::find($id);
+
+       return view('meal.editmealform')->with(compact('meal'));
     }
 
     /**
@@ -72,7 +90,18 @@ class MealsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $meal = Meal::find($id);
+        
+        $meal->name = $request->input('name');
+        $meal->price = $request->input('price');
+        $meal->description = $request->input('description');
+
+        # TODO: Make all the letter of the meal type lowercase 
+        $meal->menu_type =  $request->input('meal_type');
+        
+        if ( $meal->save() ) {
+            return redirect('meal');
+        }
     }
 
     /**
@@ -83,6 +112,12 @@ class MealsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $meal = Meal::find($id);
+
+        if( $meal->delete() ){
+            return redirect('meal');
+        }
     }
+
+    
 }

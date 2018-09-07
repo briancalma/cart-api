@@ -119,5 +119,10 @@ class MealsController extends Controller
         }
     }
 
+    public function getMeals() {
+        $meals = Meal::paginate(15);
+        return MealResource::collection($meals);
+    }
+
     
 }

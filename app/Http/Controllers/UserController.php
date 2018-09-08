@@ -30,6 +30,7 @@ class UserController extends Controller
         $firstname = $request->input('firstname');
         $lastname =  $request->input('lastname');
         $phone_number = $request->input('phone_number');
+        $email =  $request->input('email');
         $username = $request->input('username');
         $password = Hash::make( $request->input('password') );
         
@@ -38,6 +39,7 @@ class UserController extends Controller
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->phone_number = $phone_number;
+        $user->email = $email;
         $user->username = $username;
         $user->password = $password;
 

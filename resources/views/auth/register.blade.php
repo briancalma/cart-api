@@ -1,5 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.login_layout')
 
+{{-- 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -116,4 +117,156 @@
         </div>
     </div>
 </div>
+@endsection 
+--}}
+
+@section('content')
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+        <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+        <div class="row w-100">
+            <div class="col-lg-4 mx-auto">
+            {{-- <h2 class="text-center mb-4">Register</h2> --}}
+            <div class="auto-form-wrapper">
+                <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+                    @csrf
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="firstname" type="text" placeholder="Firstname" class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}" name="firstname" value="{{ old('firstname') }}" required autofocus>
+
+                            @if ($errors->has('firstname'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('firstname') }}</strong>
+                                </span>
+                            @endif
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="lastname" type="text" placeholder="Lastname" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required autofocus>
+
+                            @if ($errors->has('lastname'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('lastname') }}</strong>
+                                </span>
+                            @endif
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="phone_number" type="text" placeholder="phone number" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required>
+
+                            @if ($errors->has('phone_number'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('phone_number') }}</strong>
+                                </span>
+                            @endif
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="username" type="text" placeholder="Username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
+
+                            @if ($errors->has('username'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
+                            @endif
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                        </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="password" placeholder="Enter Password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                            <i class="mdi mdi-check-circle-outline"></i>
+                            </span>
+                        </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="password-confirm" placeholder="Confirm Password" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="mdi mdi-check-circle-outline"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center">
+                        <div class="form-check form-check-flat mt-0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" checked> I agree to the terms
+                        </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary submit-btn btn-block">Register</button>
+                    </div>
+                    <div class="text-block text-center my-3">
+                        <span class="text-small font-weight-semibold">Already have and account ?</span>
+                        <a href="{{ route('login') }}" class="text-black text-small">Login</a>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>  
 @endsection

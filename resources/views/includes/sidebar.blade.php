@@ -47,7 +47,7 @@
             </li> 
          --}}
         <li class="nav-item">
-            <a class="nav-link" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic" data-toggle="collapse" >
+            <a class="nav-link" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic" data-toggle="collapse">
                 <i class="menu-icon fa fa-tags"></i>
                 <span class="menu-title">Products</span>
             </a>
@@ -64,10 +64,21 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('orders') }}">
+            <a class="nav-link" href="#ui-orders" aria-expanded="false" aria-controls="ui-orders" data-toggle="collapse">
                 <i class="menu-icon fa fa-shopping-cart"></i>
                 <span class="menu-title">Orders</span>
             </a>
+
+            <div class="collapse" id="ui-orders">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('transactions') }}">Pending Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('transactions/finished') }}">Finished Orders</a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item">

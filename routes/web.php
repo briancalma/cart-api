@@ -23,6 +23,7 @@ Route::resource('meal', 'MealsController');
 
 Route::resource('products', 'ProductsController');
 
+Route::resource('transactions','TransactionsController');
 // Route::get('/meal','MealsController@index');
 // Route::get('/meal/create','MealsController@create');
 // Route::post('/meal/store','MealsController@store');

@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
+// use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Product as ProductResource;
 
 class ProductsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     
     public function index()
     {
@@ -115,5 +114,13 @@ class ProductsController extends Controller
         if( $product->delete() ) {
             return redirect('products')->with('success','Product is successfully deleted!');    ;    
         }
+    }
+
+    public function getProducts() {
+        $products = Product::where('available',true)
+                            ->where('visible',true)
+                            ->get();
+
+        return ProductResource::collection($products);
     }
 }

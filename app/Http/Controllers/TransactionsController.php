@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Transaction;
 
 class TransactionsController extends Controller
 {
@@ -13,7 +14,10 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        return view('transaction.index');
+        $transactions = Transaction::where('status',false)->get();
+
+        // return $transactions;
+        return view('transaction.index')->with(compact('transactions'));
     }
 
     /**
@@ -44,8 +48,13 @@ class TransactionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        return view('transaction.view');
+    {   
+        $transaction = Transaction::findOrFail($id);
+        // $transaction = Transaction::where('transaction_id',$id)->get();
+
+        // return $transaction->user;
+        // $transaction = $transaction->user->username;
+        return view('transaction.view')->with(compact('transaction'));
     }
 
     /**
@@ -81,4 +90,5 @@ class TransactionsController extends Controller
     {
         //
     }
+
 }

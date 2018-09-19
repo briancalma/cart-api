@@ -54,12 +54,12 @@
 
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('products') }}">Product Management</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('products/create') }}">Add New Product</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('products') }}">Product Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('products/create') }}">Add New Product</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -71,6 +71,9 @@
 
             <div class="collapse" id="ui-orders">
                 <ul class="nav flex-column sub-menu">
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="{{ url('transactions/create') }}">Add Transaction</a>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('transactions') }}">Pending Orders</a>
                     </li>

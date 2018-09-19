@@ -1,4 +1,4 @@
-@extends('layouts.master')
+    @extends('layouts.master')
 
 @section('content')
     @if (session('status'))
@@ -34,9 +34,19 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="lead">Transaction ID : 101010</h4>
-                    <h4 class="lead">FullName : Brian Dev acc</h4>
-                    <h4 class="lead">Total Payment : P 100.00</h4>
+                    <h4 class="lead">Transaction ID : {{ $transaction->transaction_id }}</h4>
+                    <h4 class="lead">FullName : {{ $transaction->user->firstname." ".$transaction->user->lastname }}</h4>
+                    <h4 class="lead">Total Payment : 
+                        <?php $totalPrice = 0;?>
+                        @foreach ($transaction->orders as $order)
+                            {{-- {{ $order->product->name }} - {{ $order->product->retail_price *  $order->qty }} --}}
+                            <?php 
+                                $total = $order->product->retail_price * $order->qty;
+                                $totalPrice = $totalPrice + $total;
+                            ?>    
+                        @endforeach
+                        {{ "₱".number_format( $totalPrice, 2, ".", ",") }}
+                    </h4>
                 </div>
             </div>
         </div>
@@ -69,12 +79,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach ($transaction->orders as $order)
+                                    <tr>
+                                        <td> {{ $order->product_id }} </td>
+                                        <td> {{ $order->product->name }} </td>
+                                        <td> {{ $order->qty }} </td>
+                                        <td> {{ $order->product->retail_price }} </td>
+                                        <td> {{ "₱".number_format( $order->product->retail_price * $order->qty, 2, ".", ",") }} </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+                    <br>
 
-                    <h4 class="display-3">TOTAL PRICE: <span class="text-danger">P 100.00</span></h4>
+                    <h4 class="display-3">TOTAL PRICE: 
+                        <?php $totalPrice = 0;?>
+                        @foreach ($transaction->orders as $order)
+                            {{-- {{ $order->product->name }} - {{ $order->product->retail_price *  $order->qty }} --}}
+                            <?php 
+                                $total = $order->product->retail_price * $order->qty;
+                                $totalPrice = $totalPrice + $total;
+                            ?>    
+                        @endforeach
+                        <span class="text-danger">{{ "₱".number_format( $totalPrice, 2, ".", ",") }}</span>
+                    </h4>
                 </div>
 
                 <div class="card-footer">
@@ -84,7 +113,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <button class="btn btn-danger btn-block btn-lg">Cancel</button>
+                            <a class="btn btn-danger btn-block btn-lg" href="{{ url('transactions') }}">Cancel</a>
                         </div>
                     </div>
                 </div>

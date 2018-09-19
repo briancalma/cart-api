@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use PDF;
 
 class TransactionsController extends Controller
 {
@@ -89,6 +90,37 @@ class TransactionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changeTransactionStatus($id) 
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->status = true;
+        // $this->generatePDF($transaction);
+        if( $transaction->save() ) {
+            $this->generatePDF($transaction);
+            
+        }
+    }
+
+    public function generatePDF($transaction) 
+    {   
+
+        // $data = [ "pogi ako", 'hello!' ];
+        $pdf = PDF::loadView('transaction.reciept', compact('transaction'));
+        $pdf->download('invoice.pdf');
+        return redirect('transactions/');
+
+
+        // $pdf = PDF::loadView('transaction.reciept-pdf');
+        // return $pdf->download('invoice.pdf');
+
+        // $pdf = PDF::loadView('transaction.reciept-pdf');
+
+        // # PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+
+        // return $pdf->download('hdtuto.pdf');
     }
 
 }

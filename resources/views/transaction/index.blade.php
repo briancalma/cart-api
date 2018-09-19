@@ -58,7 +58,7 @@
                             @foreach ($transactions as $transaction)
                                 <tr>
                                     <td> 
-                                        <a target="_blank" href="{{ url("transactions/$transaction->id") }}"> {{ $transaction->transaction_id }} </a>
+                                        <a href="{{ url("transactions/$transaction->id") }}"> {{ $transaction->transaction_id }} </a>
                                     </td>
                                     <td> {{ $transaction->user->firstname ." ".  $transaction->user->lastname }} </td>
                                     <td> {{ $transaction->created_at->format('D, d F Y') }} </td>
@@ -74,7 +74,7 @@
                                         {{ "₱".number_format( $totalPrice, 2, ".", ",") }}
                                     </td>
                                     <td class="text-danger font-weight-bold"> 
-                                         <a target="_blank" class="btn btn-info" href="{{ url("transactions/$transaction->id") }}">View</a> 
+                                         <a class="btn btn-info" href="{{ url("transactions/$transaction->id") }}">View</a> 
                                     </td>
                                 </tr>
                             @endforeach

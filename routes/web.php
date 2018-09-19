@@ -24,6 +24,14 @@ Route::resource('meal', 'MealsController');
 Route::resource('products', 'ProductsController');
 
 Route::resource('transactions','TransactionsController');
+
+Route::get('transactions/pass/{transaction}','TransactionsController@changeTransactionStatus');
+
+Route::get('transactions/gen-pdf','TransactionsController@generatePDF');
+
+
+// Route::get('transactions/gen-pdf/','TransactionsController@generatePdf');
+
 // Route::get('/meal','MealsController@index');
 // Route::get('/meal/create','MealsController@create');
 // Route::post('/meal/store','MealsController@store');

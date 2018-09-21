@@ -119,5 +119,21 @@
     <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }}"></script>
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/misc.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+    <script>
+            (function($) {
+                'use strict';
+                $(function() {
+                    $('.file-upload-browse').on('click', function() {
+                        var file = $(this).parent().parent().parent().find('.file-upload-default');
+                        file.trigger('click');
+                    });
+                    $('.file-upload-default').on('change', function() {
+                        $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+                    });
+                });
+            })(jQuery);
+        </script>
 </body>
 </html>

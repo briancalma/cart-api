@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\Order;
+use App\Product;
 use PDF;
 
 class TransactionsController extends Controller
@@ -39,7 +41,45 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $orders = $request->input('orders');
+        $user_id = $request->input('user_id');
+        
+        # Inserting a new transaction
+        $new_transaction = new Transaction;
+        $new_transaction->user_id = $user_id;
+        $new_transaction->transaction_id = "transact__";
+        $new_transaction->save();
+
+        # Retrieving the newly save transaction id 
+        $id = $new_transaction->id; 
+        $new_transaction->transaction_id = "transact_".$id;
+        $new_transaction->save();
+        
+        // # Loop to each order
+        foreach( $orders as $order ) 
+        {
+            // Inserting a new order
+            $new_order = new Order;
+            $new_order->transaction_id = $id;
+            $new_order->product_id = $order['product_id'];
+            $new_order->qty = $order['qty'];
+            $new_order->save();
+        }
+
+        $temp = $this->generateOrderData($orders);
+        
+
+        $data = [
+                    "transaction_id" => $id,
+                    "user_id" => $user_id,
+                    "orders" => $temp->order_data,
+                    "bill_date" => $new_transaction->created_at->format('D, d F Y'),
+                    "total_payment" => $temp->total_price
+                ];
+
+        $response = ["status" => "success", "message" => "Transaction was successfully saved.", "data" => $data];        
+        return $response;
     }
 
     /**
@@ -99,28 +139,45 @@ class TransactionsController extends Controller
         // $this->generatePDF($transaction);
         if( $transaction->save() ) {
             $this->generatePDF($transaction);
-            
         }
     }
 
     public function generatePDF($transaction) 
     {   
-
-        // $data = [ "pogi ako", 'hello!' ];
         $pdf = PDF::loadView('transaction.reciept', compact('transaction'));
         $pdf->download('invoice.pdf');
         return redirect('transactions/');
-
-
-        // $pdf = PDF::loadView('transaction.reciept-pdf');
-        // return $pdf->download('invoice.pdf');
-
-        // $pdf = PDF::loadView('transaction.reciept-pdf');
-
-        // # PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-
-
-        // return $pdf->download('hdtuto.pdf');
     }
+
+    public function generateOrderData( $orders ) 
+    {   
+        $order_data = [];
+
+        $total_price = 0;
+
+        foreach($orders as $order) 
+        {   
+            # Retrieving Order and Product Data
+            $product = Product::find($order['product_id']);
+            $name = $product->name;
+            $price = $product->retail_price;
+            $qty = $order['qty'];
+            $total = $price * $qty;
+
+            $total_price += $total;
+            // Creating an object
+            $data = new \stdClass();
+            $data->name = $name;
+            $data->price = $price;
+            $data->qty = $qty;
+            $data->total = $total;
+            # Add The object to the order_data
+            array_push($order_data,$data);
+        }
+
+        return (object) ['order_data' => $order_data, 'total_price' => $total_price];
+    }
+
+
 
 }

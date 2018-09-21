@@ -36,14 +36,15 @@
                             <div class="card-body">
                                 <h4 class="card-title">Image</h4>
                                 <div class="form-group">
-                                    <label>Upload Image</label>
-                                    <input type="file" name="img" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
+                                    <label>Upload Image</label><br>
+                                    <input type="file" name="img">
+                                    {{-- <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                         <span class="input-group-append">
                                         <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                                         </span>
-                                    </div>
+                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam commodi amet provident, repudiandae veritatis quaerat pariatur temporibus at iste ipsam.
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -74,5 +75,5 @@
         </div>
     </form>
   
-
+   
 @endsection

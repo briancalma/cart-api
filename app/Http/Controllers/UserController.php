@@ -80,11 +80,11 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');    
         $credentials = ["username" => $username, "password" => $password];
-        
+
         $response = [ "result" => "error", "message" => "Username or Password does not exist!"];
 
         if(Auth::attempt($credentials)) {
-            $response = [ "result" => "success", "message" => "Login Successful" ];
+            $response = [ "result" => "success", "message" => "Login Successful", "user_data" => Auth::user()];
         } 
 
         return $response;

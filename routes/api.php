@@ -23,3 +23,4 @@ Route::post('user/login','UserController@login');
 Route::post('user','UserController@store');
 Route::get('meals','MealsController@getMeals');
 Route::get('products/','ProductsController@getProducts');
+Route::post('transaction','TransactionsController@store');

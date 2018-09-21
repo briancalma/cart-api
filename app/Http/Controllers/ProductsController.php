@@ -43,12 +43,35 @@ class ProductsController extends Controller
         // Do somethething to sku
         // Validations of field      
         // Image Upload
+       
+        if($request->hasFile('img'))
+        {
+            $fileNameWithExtension = $request->file('img')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension,PATHINFO_FILENAME);
+            $extension = $request->file('img')->getClientOriginalExtension();
+
+            $fileNameToStore = "";
+
+            if($this->checkIfValidImage($extension)) {
+                $fileNameToStore = $fileName."__".time().".".$extension;
+                $path = $request->file('img')->storeAs('public/images/banners',$fileNameToStore);
+            } 
+            else $fileNameToStore = 'default.png';    
+        }
+        else
+        {
+            $fileNameToStore = 'default.png';
+        }
+
         $product = new Product;
         $product->name = $request->input('name');
         $product->description = $request->input('description');
-        $product->images = $request->input('images');
+        $product->images = $fileNameToStore;
         $product->retail_price = $request->input('retail-price');
         $product->sale_price = $request->input('sale-price');
+
+        
+        # return $request->all();
 
         if( $product->save() ) {
             return redirect('products')->with('success','Product is successfully added!');    
@@ -121,6 +144,22 @@ class ProductsController extends Controller
                             ->where('visible',true)
                             ->get();
 
+        foreach ($products as $product) 
+        {
+            // {{asset('storage/attachments')}}
+            $image = asset('storage/images/banners') ."/". $product->images; 
+            $product->images = $image;
+        }
+
         return ProductResource::collection($products);
+    }
+
+    private function checkIfValidImage($ext) {
+        
+        if( !empty($ext) ) {
+            return ( $ext == 'jpg' ) || ( $ext == 'jpeg' ) || ( $ext == 'png' );
+        }
+
+        return false;
     }
 }

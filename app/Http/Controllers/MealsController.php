@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Meal;
+use App\Meal; 
 use App\Http\Resources\Meal as MealResource;
 
 class MealsController extends Controller

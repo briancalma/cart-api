@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
+
+Route::get('/', 'HomeController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -29,6 +31,7 @@ Route::get('transactions/pass/{transaction}','TransactionsController@changeTrans
 
 Route::get('transactions/gen-pdf','TransactionsController@generatePDF');
 
+Route::get('/getFinishedTransactions','TransactionsController@getFinishedTransactions');
 
 // Route::get('transactions/gen-pdf/','TransactionsController@generatePdf');
 

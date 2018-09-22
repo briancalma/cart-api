@@ -78,17 +78,17 @@
                         <a class="nav-link" href="{{ url('transactions') }}">Pending Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('transactions/finished') }}">Finished Orders</a>
+                        <a class="nav-link" href="{{ url('/getFinishedTransactions') }}">Finished Orders</a>
                     </li>
                 </ul>
             </div>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ url('reports') }}">
                 <i class="menu-icon mdi mdi-elevation-rise"></i>
                 <span class="menu-title">Reports</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </nav>

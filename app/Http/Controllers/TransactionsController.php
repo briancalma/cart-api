@@ -17,7 +17,9 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('status',false)->get();
+        $transactions = Transaction::where('status',false)
+                        ->orderBy('id','desc')
+                        ->get();
 
         // return $transactions;
         return view('transaction.index')->with(compact('transactions'));
@@ -163,7 +165,7 @@ class TransactionsController extends Controller
             $price = $product->retail_price;
             $qty = $order['qty'];
             $total = $price * $qty;
-
+            
             $total_price += $total;
             // Creating an object
             $data = new \stdClass();
@@ -178,6 +180,16 @@ class TransactionsController extends Controller
         return (object) ['order_data' => $order_data, 'total_price' => $total_price];
     }
 
+    public function getFinishedTransactions()
+    {
+        $transactions = Transaction::where('status',true)
+                        ->orderBy('id','desc')
+                        ->get();                
+        # return Route::currentRouteName();
 
+        # return $transactions;
+        return view('transaction.finished')->with(compact('transactions'));
+    }   
 
+    
 }

@@ -8,28 +8,6 @@
     @endif
     
     <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend bg-info">
-                            <span class="input-group-text bg-transparent">
-                                <i class="mdi mdi-magnify text-white icon-lg"></i>
-                            </span>
-                            </div>
-                            <input id="transactionIDTxt" type="text" onkeyup="getTransactionID()" class="form-control" placeholder="* Enter Transasction ID" aria-label="Username" aria-describedby="colored-addon1" style="padding:20px;font-size:30px;font-weight: bolder;">
-                        </div>
-                    </div>
-                    <p class="text-info lead">Transaction ID is a  unique id that such customer will have in every order. Just simply type the transaction id above and see which orders match below.</p>
-                    <button class="btn btn-primary btn-block btn-lg" onclick="viewTransaction()">View Transaction</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -50,16 +28,17 @@
                                 <th>
                                     Total
                                 </th>
-                                <th>
+                                {{-- <th>
                                     Action
-                                </th>
+                                </th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
                                     <td> 
-                                        <a href="{{ url("transactions/$transaction->id") }}"> {{ $transaction->transaction_id }} </a>
+                                        {{-- <a href="{{ url("transactions/$transaction->id") }}"> {{ $transaction->transaction_id }} </a> --}}
+                                        {{ $transaction->transaction_id }} 
                                     </td>
                                     <td> {{ $transaction->user->firstname ." ".  $transaction->user->lastname }} </td>
                                     <td> {{ $transaction->created_at->format('D, d F Y') }} </td>
@@ -74,9 +53,9 @@
                                         @endforeach
                                         {{ "₱".number_format( $totalPrice, 2, ".", ",") }}
                                     </td>
-                                    <td class="text-danger font-weight-bold"> 
+                                    {{-- <td class="text-danger font-weight-bold"> 
                                          <a class="btn btn-info" href="{{ url("transactions/$transaction->id") }}">View</a> 
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
